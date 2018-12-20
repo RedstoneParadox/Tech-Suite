@@ -13,12 +13,10 @@ import net.redstoneparadox.techsuite.blockentities.MachineBlockEntity
  */
 object BlockEntityRegistry {
 
-    private lateinit var machineBlockEntity : BlockEntityType<MachineBlockEntity> set
-
-    val machineBlockEntityType : BlockEntityType<MachineBlockEntity> = BlockEntityType.Builder.create(::MachineBlockEntity).method_11034(null)!!
+    lateinit var machineBlockEntityType : BlockEntityType<MachineBlockEntity>
 
     fun initBlockEntities() {
-        machineBlockEntity = registerBlockEntity("machine", machineBlockEntityType)
+        machineBlockEntityType = registerBlockEntity("machine",BlockEntityType.Builder.create(::MachineBlockEntity).method_11034(null)!!)
     }
 
     fun <T : BlockEntity> registerBlockEntity(name : String, blockEntityType : BlockEntityType<T>) : BlockEntityType<T> {

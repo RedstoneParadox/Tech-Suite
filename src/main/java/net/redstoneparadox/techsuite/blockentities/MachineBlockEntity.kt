@@ -24,15 +24,15 @@ class MachineBlockEntity(type : BlockEntityType<MachineBlockEntity>) : BlockEnti
 
     lateinit var machine : Machine
     private val inventory = DefaultedList.create(invSize, ItemStack.EMPTY)
-    lateinit var input : ArrayList<Item?>
-    lateinit var output : ArrayList<Item?>
+    var input : ArrayList<Item?> = ArrayList()
+    var output : ArrayList<Item?> = ArrayList()
     var ticksRemaining = 1000
 
 
     constructor(machine : Machine) : this(BlockEntityRegistry.machineBlockEntityType) {
         this.machine = machine
-        input.add(null)
-        input.add(null)
+        input.add(ItemStack.EMPTY.item)
+        input.add(ItemStack.EMPTY.item)
         setInvStack(0, ItemStack(Blocks.IRON_ORE.item, 64))
     }
 

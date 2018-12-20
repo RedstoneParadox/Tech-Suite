@@ -11,26 +11,35 @@ import net.redstoneparadox.techsuite.util.Machine
  */
 object TSRecipies {
 
-    lateinit var furnaceRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>>
-    lateinit var blastFurnaceRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>>
-    lateinit var smokerRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>>
-    lateinit var crusherRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>>
-    lateinit var grinderRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>>
-    lateinit var mixerRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>>
+    var furnaceRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>> = HashMap()
+    var blastFurnaceRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>> = HashMap()
+    var smokerRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>> = HashMap()
+    var crusherRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>> = HashMap()
+    var grinderRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>> = HashMap()
+    var mixerRecipes : HashMap<ArrayList<Item?>, ArrayList<Item?>> = HashMap()
 
     fun initRecipes() {
-        registerRecipe(Blocks.IRON_ORE.item, out1 = Items.IRON_INGOT)
-        registerRecipe(Blocks.GOLD_ORE.item, out1 = Items.GOLD_INGOT)
+        registerRecipe(Machine.FURNACE, Blocks.IRON_ORE.item, out1 = Items.IRON_INGOT)
+        registerRecipe(Machine.FURNACE, Blocks.GOLD_ORE.item, out1 = Items.GOLD_INGOT)
     }
 
-    fun registerRecipe(in1: Item, in2: Item = ItemStack.EMPTY.item, out1: Item, out2: Item = ItemStack.EMPTY.item) {
-        var input : ArrayList<Item> = ArrayList()
-        var output : ArrayList<Item> = ArrayList()
+    fun registerRecipe(machine: Machine,in1: Item, in2: Item = ItemStack.EMPTY.item, out1: Item, out2: Item = ItemStack.EMPTY.item) {
+        var input : ArrayList<Item?> = ArrayList()
+        var output : ArrayList<Item?> = ArrayList()
 
         input.add(in1)
         input.add(in2)
         output.add(out1)
         output.add(out2)
+
+        when(machine) {
+            Machine.FURNACE -> furnaceRecipes.put(input, output)
+            Machine.BLAST_FURNACE -> TODO()
+            Machine.SMOKER -> TODO()
+            Machine.CRUSHER -> TODO()
+            Machine.GRINDER -> TODO()
+            Machine.MIXER -> TODO()
+        }
     }
 
     fun getOutput(machine : Machine, in1: Item, in2: Item? = ItemStack.EMPTY.item) : ArrayList<Item?> {
