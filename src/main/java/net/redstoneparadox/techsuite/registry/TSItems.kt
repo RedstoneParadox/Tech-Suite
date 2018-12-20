@@ -52,7 +52,7 @@ object TSItems {
         var id = Identifier(TechSuite.MOD_ID, name)
 
         return Registry.register(Registry.ITEM, id, item)
-1    }
+    }
 
     fun registerItem(material : IngredientMaterial, type : IngredientType) : Item {
         var identifier : Identifier

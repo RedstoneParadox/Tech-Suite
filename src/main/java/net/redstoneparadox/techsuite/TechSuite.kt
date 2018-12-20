@@ -2,7 +2,7 @@ package net.redstoneparadox.techsuite
 
 import net.fabricmc.api.ModInitializer
 import net.redstoneparadox.techsuite.registry.TSRecipies
-import net.redstoneparadox.techsuite.registry.TSBlockEntities
+import net.redstoneparadox.techsuite.registry.BlockEntityRegistry
 import net.redstoneparadox.techsuite.registry.TSBlocks
 import net.redstoneparadox.techsuite.registry.TSItems
 
@@ -14,7 +14,7 @@ class TechSuite : ModInitializer {
     override fun onInitialize() {
         TSBlocks.initBlocks()
         TSItems.initItems()
-        TSBlockEntities.initBlockEntities()
+        BlockEntityRegistry.initBlockEntities()
         TSRecipies.initRecipes()
     }
 

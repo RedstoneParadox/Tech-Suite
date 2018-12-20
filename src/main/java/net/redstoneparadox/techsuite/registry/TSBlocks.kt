@@ -24,7 +24,7 @@ object TSBlocks {
     fun initBlocks() {
         myFirstBlock = registerBlock("my_first_block", MyFirstBlock(constructSettings()))
 
-        poweredFurnace = registerBlock("powered_furnace", MachineBlock(constructSettings(), Machine.FURNACE)) as MachineBlock
+        poweredFurnace = registerBlock("powered_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.FURNACE)) as MachineBlock
     }
 
     fun registerBlock(name : String, block: Block) : Block {

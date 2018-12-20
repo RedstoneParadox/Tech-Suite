@@ -1,8 +1,8 @@
 {
-  "id": "modid",
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
-  "version": "1.0.0",
+  "id": "tech_suite",
+  "name": "Tech Suite",
+  "description": "Banana!",
+  "version": "0.1.0",
   "side": "universal",
   "initializer": "net.redstoneparadox.techsuite.TechSuite",
   "requires": {

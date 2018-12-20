@@ -11,6 +11,7 @@ import net.minecraft.text.TextComponent
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.InventoryUtil
 import net.minecraft.util.Tickable
+import net.redstoneparadox.techsuite.registry.BlockEntityRegistry
 import net.redstoneparadox.techsuite.registry.TSRecipies
 import net.redstoneparadox.techsuite.util.Machine
 
@@ -19,7 +20,7 @@ import net.redstoneparadox.techsuite.util.Machine
 /**
  * Created by RedstoneParadox on 12/18/2018.
  */
-class MachineBlockEntity() : BlockEntity(type), Tickable, Inventory{
+class MachineBlockEntity(type : BlockEntityType<MachineBlockEntity>) : BlockEntity(type), Tickable, Inventory{
 
     lateinit var machine : Machine
     private val inventory = DefaultedList.create(invSize, ItemStack.EMPTY)
@@ -28,16 +29,18 @@ class MachineBlockEntity() : BlockEntity(type), Tickable, Inventory{
     var ticksRemaining = 1000
 
 
-    constructor(machine : Machine) : this() {
+    constructor(machine : Machine) : this(BlockEntityRegistry.machineBlockEntityType) {
         this.machine = machine
         input.add(null)
         input.add(null)
         setInvStack(0, ItemStack(Blocks.IRON_ORE.item, 64))
     }
 
+    constructor() : this(BlockEntityRegistry.machineBlockEntityType)
+
     override fun tick() {
 
-        var currentInput : ArrayList<Item?> = ArrayList()
+        val currentInput : ArrayList<Item?> = ArrayList()
 
         currentInput.add(getInvStack(0).item)
         currentInput.add(getInvStack(1).item)
@@ -145,10 +148,5 @@ class MachineBlockEntity() : BlockEntity(type), Tickable, Inventory{
 
     override fun hasCustomName(): Boolean {
         return false
-    }
-
-    //Companion cube...er...object containing the type.
-    companion object {
-        val type = BlockEntityType.Builder.create(::MachineBlockEntity).method_11034(null)!!
     }
 }
