@@ -13,21 +13,20 @@ import net.redstoneparadox.techsuite.block.MachineBlock
  */
 object BlockEntityRegistry {
 
-    lateinit var furnaceMachineType : BlockEntityType<MachineBlock.FurnaceMachineBlockEntity>
-    lateinit var blastFurnaceMachineType : BlockEntityType<MachineBlock.BlastFurnaceMachineBlockEntity>
-    lateinit var smokerMachineType : BlockEntityType<MachineBlock.SmokerMachineBlockEntity>
-    lateinit var crusherMachineType : BlockEntityType<MachineBlock.CrusherMachineBlockEntity>
-    lateinit var grinderMachineType : BlockEntityType<MachineBlock.GrinderMachineBlockEntity>
-    lateinit var mixerMachineType : BlockEntityType<MachineBlock.MixerMachineBlockEntity>
+    lateinit var FURNACE_MACHINE : BlockEntityType<MachineBlock.FurnaceMachineBlockEntity>
+    lateinit var BLAST_FURNACE_MACHINE : BlockEntityType<MachineBlock.BlastFurnaceMachineBlockEntity>
+    lateinit var SMOKER_MACHINE : BlockEntityType<MachineBlock.SmokerMachineBlockEntity>
+    lateinit var CRUSHER_MACHINE : BlockEntityType<MachineBlock.CrusherMachineBlockEntity>
+    lateinit var GRINDER_MACHINE : BlockEntityType<MachineBlock.GrinderMachineBlockEntity>
+    lateinit var MIXER_MACHINE : BlockEntityType<MachineBlock.MixerMachineBlockEntity>
 
     fun initBlockEntities() {
-        furnaceMachineType = registerBlockEntity("powered_furnace", BlockEntityType.Builder.create { MachineBlock.FurnaceMachineBlockEntity() })
-        blastFurnaceMachineType = registerBlockEntity("powered_blast_furnace", BlockEntityType.Builder.create { MachineBlock.BlastFurnaceMachineBlockEntity() })
-        smokerMachineType = registerBlockEntity("powered_smoker", BlockEntityType.Builder.create { MachineBlock.SmokerMachineBlockEntity() })
-        crusherMachineType = registerBlockEntity("powered_crusher", BlockEntityType.Builder.create { MachineBlock.CrusherMachineBlockEntity() })
-        grinderMachineType = registerBlockEntity("powered_grinder", BlockEntityType.Builder.create { MachineBlock.GrinderMachineBlockEntity() })
-        mixerMachineType = registerBlockEntity("powered_mixer", BlockEntityType.Builder.create { MachineBlock.MixerMachineBlockEntity() })
-
+        FURNACE_MACHINE = registerBlockEntity("powered_furnace", BlockEntityType.Builder.create { MachineBlock.FurnaceMachineBlockEntity() })
+        BLAST_FURNACE_MACHINE = registerBlockEntity("powered_blast_furnace", BlockEntityType.Builder.create { MachineBlock.BlastFurnaceMachineBlockEntity() })
+        SMOKER_MACHINE = registerBlockEntity("powered_smoker", BlockEntityType.Builder.create { MachineBlock.SmokerMachineBlockEntity() })
+        CRUSHER_MACHINE = registerBlockEntity("powered_crusher", BlockEntityType.Builder.create { MachineBlock.CrusherMachineBlockEntity() })
+        GRINDER_MACHINE = registerBlockEntity("powered_grinder", BlockEntityType.Builder.create { MachineBlock.GrinderMachineBlockEntity() })
+        MIXER_MACHINE = registerBlockEntity("powered_mixer", BlockEntityType.Builder.create { MachineBlock.MixerMachineBlockEntity() })
     }
 
     fun <T : BlockEntity> registerBlockEntity(name : String, builder : BlockEntityType.Builder<T>) : BlockEntityType<T> {

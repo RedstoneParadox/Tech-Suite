@@ -18,29 +18,29 @@ object BlockRegistry {
 
     lateinit var myFirstBlock: Block
 
-    lateinit var poweredFurnace: MachineBlock
-    lateinit var poweredBlastFurnace: MachineBlock
-    lateinit var poweredSmoker: MachineBlock
-    lateinit var poweredCrusher: MachineBlock
-    lateinit var poweredGrinder: MachineBlock
-    lateinit var poweredMixer: MachineBlock
+    lateinit var POWERED_FURNACE: MachineBlock
+    lateinit var POWERED_BLAST_FURNACE: MachineBlock
+    lateinit var POWERED_SMOKER: MachineBlock
+    lateinit var POWERED_CRUSHER: MachineBlock
+    lateinit var POWERED_GRINDER: MachineBlock
+    lateinit var POWERED_MIXER: MachineBlock
 
     fun initBlocks() {
-        poweredFurnace = registerBlock("powered_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.FURNACE)) as MachineBlock
-        poweredBlastFurnace = registerBlock("powered_blast_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.BLAST_FURNACE)) as MachineBlock
-        poweredSmoker = registerBlock("powered_smoker", MachineBlock(constructSettings(material = Material.METAL), Machine.SMOKER)) as MachineBlock
-        poweredCrusher = registerBlock("powered_crusher", MachineBlock(constructSettings(material = Material.METAL), Machine.CRUSHER)) as MachineBlock
-        poweredGrinder = registerBlock("powered_grinder", MachineBlock(constructSettings(material = Material.METAL), Machine.GRINDER)) as MachineBlock
-        poweredMixer = registerBlock("powered_mixer", MachineBlock(constructSettings(material = Material.METAL), Machine.MIXER)) as MachineBlock
+        POWERED_FURNACE = registerBlock("powered_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.FURNACE)) as MachineBlock
+        POWERED_BLAST_FURNACE = registerBlock("powered_blast_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.BLAST_FURNACE)) as MachineBlock
+        POWERED_SMOKER = registerBlock("powered_smoker", MachineBlock(constructSettings(material = Material.METAL), Machine.SMOKER)) as MachineBlock
+        POWERED_CRUSHER = registerBlock("powered_crusher", MachineBlock(constructSettings(material = Material.METAL), Machine.CRUSHER)) as MachineBlock
+        POWERED_GRINDER = registerBlock("powered_grinder", MachineBlock(constructSettings(material = Material.METAL), Machine.GRINDER)) as MachineBlock
+        POWERED_MIXER = registerBlock("powered_mixer", MachineBlock(constructSettings(material = Material.METAL), Machine.MIXER)) as MachineBlock
     }
 
-    fun registerBlock(name : String, block: Block) : Block {
+    private fun registerBlock(name : String, block: Block) : Block {
         var id = Identifier(TechSuite.MOD_ID, name)
 
         return Registry.register(Registry.BLOCK, id, block) as Block
     }
 
-    fun constructSettings(
+    private fun constructSettings(
             material: Material = Material.AIR,
             color: MaterialColor = MaterialColor.AIR,
             collidable : Boolean = true,

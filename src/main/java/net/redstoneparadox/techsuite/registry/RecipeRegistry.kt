@@ -19,12 +19,14 @@ object RecipeRegistry {
     var grinderRecipeList : ArrayList<MachineRecipe> = ArrayList()
     var mixerRecipeList : ArrayList<MachineRecipe> = ArrayList()
 
+    val EMPTY_RECIPE : MachineRecipe = MachineRecipe(ItemStack.EMPTY.item, ItemStack.EMPTY.item, ItemStack.EMPTY.item, ItemStack.EMPTY.item)
+
     fun initRecipes() {
         registerRecipe(Machine.FURNACE, Blocks.IRON_ORE.item, out1 = Items.IRON_INGOT)
         registerRecipe(Machine.FURNACE, Blocks.GOLD_ORE.item, out1 = Items.GOLD_INGOT)
     }
 
-    fun registerRecipe(machine: Machine,in1: Item, in2: Item = ItemStack.EMPTY.item, out1: Item, out2: Item = ItemStack.EMPTY.item) {
+    private fun registerRecipe(machine: Machine, in1: Item, in2: Item? = ItemStack.EMPTY.item, out1: Item, out2: Item? = ItemStack.EMPTY.item) {
         var machineRecipe : MachineRecipe = MachineRecipe(in1, in2, out1, out2)
 
         when (machine) {
@@ -37,9 +39,9 @@ object RecipeRegistry {
         }
     }
 
-    fun getRecipe(machine : Machine, in1: Item, in2: Item?) : MachineRecipe? {
+    fun getRecipe(machine : Machine, in1: Item, in2: Item?) : MachineRecipe {
 
-        var recipeList: ArrayList<MachineRecipe> = when(machine) {
+        val recipeList: ArrayList<MachineRecipe> = when(machine) {
             Machine.FURNACE -> furnaceRecipeList
             Machine.BLAST_FURNACE -> blastFurnaceRecipeList
             Machine.SMOKER -> smokerRecipeList
@@ -55,6 +57,6 @@ object RecipeRegistry {
             }
         }
 
-        return null
+        return EMPTY_RECIPE
     }
 }

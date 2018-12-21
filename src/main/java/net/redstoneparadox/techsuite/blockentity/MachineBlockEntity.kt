@@ -1,6 +1,5 @@
 package net.redstoneparadox.techsuite.blockentity
 
-import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
@@ -19,22 +18,16 @@ import net.redstoneparadox.techsuite.util.Machine
 /**
  * Created by RedstoneParadox on 12/18/2018.
  */
-abstract class MachineBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Tickable, Inventory{
+abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type), Tickable, Inventory{
 
     open val machine : Machine? = null
     private val inventory = DefaultedList.create(invSize, ItemStack.EMPTY)
     var ticksRemaining = 200
-    var test = true
-    var machineRecipe : MachineRecipe? = null
+    var machineRecipe : MachineRecipe = RecipeRegistry.EMPTY_RECIPE
 
     override fun tick() {
 
-        if (test && machine == Machine.FURNACE) {
-            setInvStack(1, ItemStack(Blocks.IRON_ORE.item, 64))
-            test = false
-        }
-
-        if (machineRecipe == null || machineRecipe!!.matchInput(getInvStack(1).item, getInvStack(2).item)){
+        if (machineRecipe.matchInput(getInvStack(1).item, getInvStack(2).item)){
             machineRecipe = RecipeRegistry.getRecipe(machine!!, getInvStack(0).item, getInvStack(1).item)
             ticksRemaining = 200
         }
@@ -42,7 +35,7 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type)
             ticksRemaining -=1
         }
         else {
-            val output : ArrayList<ItemStack> = machineRecipe!!.getOutput()
+            val output : ArrayList<ItemStack> = machineRecipe.getOutput()
 
             if (getInvStack(2) == ItemStack.EMPTY && getInvStack(3) == ItemStack.EMPTY) {
                 craft(output)
@@ -59,9 +52,6 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type)
 
         setInvStack(2, output[0])
         setInvStack(3, output[1])
-
-        System.out.println("There is " + getInvStack(0).amount + " iron ore remaining.")
-        System.out.println("There are " + getInvStack(2).amount + " iron ingots in the output.")
     }
 
     override fun markDirty() {

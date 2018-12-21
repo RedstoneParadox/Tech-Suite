@@ -3,7 +3,7 @@
   "package": "net.redstoneparadox.techsuite.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ExampleMixin"
+
   ],
   "injectors": {
     "defaultRequire": 1

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack
 /**
  * Created by RedstoneParadox on 12/20/2018.
  */
-class MachineRecipe(val inputOne : Item, val inputTwo : Item? = null, val outputOne : Item, val outputTwo : Item? = null) {
+class MachineRecipe(private val inputOne : Item, private val inputTwo : Item? = null, private val outputOne : Item, private val outputTwo : Item? = null) {
 
     fun matchInput(inputOne: Item, inputTwo: Item?) : Boolean {
         if (inputOne == this.inputOne && inputTwo == this.inputTwo) {
@@ -17,7 +17,7 @@ class MachineRecipe(val inputOne : Item, val inputTwo : Item? = null, val output
     }
 
     fun getOutput() : ArrayList<ItemStack> {
-        var outputArrayList : ArrayList<ItemStack> = ArrayList()
+        val outputArrayList: ArrayList<ItemStack> = ArrayList()
 
         outputArrayList.add(ItemStack(outputOne, 1))
         if (outputTwo != null) {

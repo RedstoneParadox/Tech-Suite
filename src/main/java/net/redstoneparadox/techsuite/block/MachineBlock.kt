@@ -32,32 +32,32 @@ class MachineBlock(settings: Settings?, var machine: Machine) : BlockWithEntity(
     }
 
     //Furnace machine block entity
-    class FurnaceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.furnaceMachineType) {
+    class FurnaceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.FURNACE_MACHINE) {
         override val machine: Machine? = Machine.FURNACE
     }
 
     //Blast furnace machine block entity.
-    class BlastFurnaceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.blastFurnaceMachineType) {
+    class BlastFurnaceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.BLAST_FURNACE_MACHINE) {
         override val machine: Machine? = Machine.FURNACE
     }
 
     //Smoker machine block entity.
-    class SmokerMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.smokerMachineType) {
+    class SmokerMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.SMOKER_MACHINE) {
         override val machine : Machine? = Machine.SMOKER
     }
 
     //Crusher machine block entity.
-    class CrusherMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.crusherMachineType) {
+    class CrusherMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.CRUSHER_MACHINE) {
         override val machine : Machine? = Machine.CRUSHER
     }
 
     //Grinder machine block entity.
-    class GrinderMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.grinderMachineType) {
+    class GrinderMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.GRINDER_MACHINE) {
         override val machine : Machine? = Machine.GRINDER
     }
 
     //Mixer machine block entity.
-    class MixerMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.mixerMachineType) {
+    class MixerMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.MIXER_MACHINE) {
         override val machine : Machine? = Machine.MIXER
     }
 }

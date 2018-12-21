@@ -11,14 +11,14 @@ import net.redstoneparadox.techsuite.TechSuite
 object ItemRegistry {
 
     //Ingots
-    lateinit var ingotCopper: Item
-    lateinit var ingotTin: Item
+    lateinit var COPPER_INGOT: Item
+    lateinit var TIN_INGOT: Item
     //Gears
-    lateinit var gearStone: Item
-    lateinit var gearIron: Item
-    lateinit var gearGold: Item
-    lateinit var gearCopper: Item
-    lateinit var gearTin: Item
+    lateinit var STONE_GEAR: Item
+    lateinit var IRON_GEAR: Item
+    lateinit var GOLD_GEAR: Item
+    lateinit var COPPER_GEAR: Item
+    lateinit var TIN_GEAR: Item
 
     enum class IngredientType(val suffix: String) {
         INGOT("_ingot"),
@@ -38,14 +38,14 @@ object ItemRegistry {
 
     fun initItems() {
         //Ingots
-        ingotCopper = registerItem(IngredientMaterial.COPPER, IngredientType.INGOT)
-        ingotTin = registerItem(IngredientMaterial.TIN, IngredientType.INGOT)
+        COPPER_INGOT = registerItem(IngredientMaterial.COPPER, IngredientType.INGOT)
+        TIN_INGOT = registerItem(IngredientMaterial.TIN, IngredientType.INGOT)
         //Gears
-        gearStone = registerItem(IngredientMaterial.STONE, IngredientType.GEAR)
-        gearIron = registerItem(IngredientMaterial.IRON, IngredientType.GEAR)
-        gearGold = registerItem(IngredientMaterial.GOLD, IngredientType.GEAR)
-        gearCopper = registerItem(IngredientMaterial.COPPER, IngredientType.GEAR)
-        gearTin = registerItem(IngredientMaterial.TIN, IngredientType.GEAR)
+        STONE_GEAR = registerItem(IngredientMaterial.STONE, IngredientType.GEAR)
+        IRON_GEAR = registerItem(IngredientMaterial.IRON, IngredientType.GEAR)
+        GOLD_GEAR = registerItem(IngredientMaterial.GOLD, IngredientType.GEAR)
+        COPPER_GEAR = registerItem(IngredientMaterial.COPPER, IngredientType.GEAR)
+        TIN_GEAR = registerItem(IngredientMaterial.TIN, IngredientType.GEAR)
     }
 
     fun registerItem(name: String, item: Item) : Item {
