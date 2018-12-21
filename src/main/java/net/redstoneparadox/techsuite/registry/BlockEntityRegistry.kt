@@ -5,7 +5,7 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import net.redstoneparadox.techsuite.TechSuite
-import net.redstoneparadox.techsuite.blockentity.MachineBlockEntity
+import net.redstoneparadox.techsuite.block.MachineBlock
 
 
 /**
@@ -13,10 +13,10 @@ import net.redstoneparadox.techsuite.blockentity.MachineBlockEntity
  */
 object BlockEntityRegistry {
 
-    lateinit var furnaceMachineType : BlockEntityType<MachineBlockEntity.FuranceMachineBlockEntity>
+    lateinit var furnaceMachineType : BlockEntityType<MachineBlock.FuranceMachineBlockEntity>
 
     fun initBlockEntities() {
-        furnaceMachineType = registerBlockEntity("powered_furnace", BlockEntityType.Builder.create {MachineBlockEntity.FuranceMachineBlockEntity() }.method_11034((null)))
+        furnaceMachineType = registerBlockEntity("powered_furnace", BlockEntityType.Builder.create {MachineBlock.FuranceMachineBlockEntity(null) }.method_11034((null)))
     }
 
     fun <T : BlockEntity> registerBlockEntity(name : String, blockEntityType : BlockEntityType<T>) : BlockEntityType<T> {
