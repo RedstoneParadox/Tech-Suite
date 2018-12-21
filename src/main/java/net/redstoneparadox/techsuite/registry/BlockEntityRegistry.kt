@@ -16,7 +16,7 @@ object BlockEntityRegistry {
     lateinit var furnaceMachineType : BlockEntityType<MachineBlock.FuranceMachineBlockEntity>
 
     fun initBlockEntities() {
-        furnaceMachineType = registerBlockEntity("powered_furnace", BlockEntityType.Builder.create {MachineBlock.FuranceMachineBlockEntity(null) }.method_11034((null)))
+        furnaceMachineType = registerBlockEntity("powered_furnace", BlockEntityType.Builder.create { MachineBlock.FuranceMachineBlockEntity() }.method_11034((null)))
     }
 
     fun <T : BlockEntity> registerBlockEntity(name : String, blockEntityType : BlockEntityType<T>) : BlockEntityType<T> {

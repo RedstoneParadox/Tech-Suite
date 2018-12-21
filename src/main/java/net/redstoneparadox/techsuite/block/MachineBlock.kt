@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.RenderTypeBlock
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.world.BlockView
 import net.redstoneparadox.techsuite.blockentity.MachineBlockEntity
 import net.redstoneparadox.techsuite.registry.BlockEntityRegistry
@@ -18,7 +17,7 @@ class MachineBlock(settings: Settings?, var machine: Machine) : BlockWithEntity(
     override fun createBlockEntity(view: BlockView): BlockEntity {
 
         return when (machine) {
-            Machine.FURNACE -> FuranceMachineBlockEntity(BlockEntityRegistry.furnaceMachineType)
+            Machine.FURNACE -> FuranceMachineBlockEntity()
             Machine.BLAST_FURNACE -> TODO()
             Machine.SMOKER -> TODO()
             Machine.CRUSHER -> TODO()
@@ -33,7 +32,7 @@ class MachineBlock(settings: Settings?, var machine: Machine) : BlockWithEntity(
     }
 
     //Furnace
-    class FuranceMachineBlockEntity(type : BlockEntityType<*>?) : MachineBlockEntity(type) {
+    class FuranceMachineBlockEntity() : MachineBlockEntity(BlockEntityRegistry.furnaceMachineType) {
         override val machine: Machine? = Machine.FURNACE
     }
 }
