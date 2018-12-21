@@ -14,7 +14,7 @@ import net.redstoneparadox.techsuite.util.Machine
 class MachineBlock(settings: Settings?, var machine: Machine) : BlockWithEntity(settings) {
 
     override fun createBlockEntity(view: BlockView): BlockEntity {
-        return MachineBlockEntity(machine)
+        return MachineBlockEntity.FuranceMachineBlockEntity()
     }
 
     override fun getRenderType(var1: BlockState?): RenderTypeBlock {

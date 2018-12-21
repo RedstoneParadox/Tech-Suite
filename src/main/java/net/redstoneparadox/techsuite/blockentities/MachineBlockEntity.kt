@@ -20,49 +20,61 @@ import net.redstoneparadox.techsuite.util.Machine
 /**
  * Created by RedstoneParadox on 12/18/2018.
  */
-class MachineBlockEntity(type : BlockEntityType<MachineBlockEntity>) : BlockEntity(type), Tickable, Inventory{
+abstract class MachineBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Tickable, Inventory{
 
-    lateinit var machine : Machine
+    open val machine : Machine? = null
     private val inventory = DefaultedList.create(invSize, ItemStack.EMPTY)
     var input : ArrayList<Item?> = ArrayList()
     var output : ArrayList<Item?> = ArrayList()
     var ticksRemaining = 1000
-
-
-    constructor(machine : Machine) : this(BlockEntityRegistry.machineBlockEntityType) {
-        this.machine = machine
-        input.add(ItemStack.EMPTY.item)
-        input.add(ItemStack.EMPTY.item)
-        setInvStack(0, ItemStack(Blocks.IRON_ORE.item, 64))
-    }
-
-    constructor() : this(BlockEntityRegistry.machineBlockEntityType)
+    var test = true
 
     override fun tick() {
 
+        if (test == true && machine == Machine.FURNACE) {
+            setInvStack(1, ItemStack(Blocks.IRON_ORE.item, 64))
+            test = false
+        }
+
         val currentInput : ArrayList<Item?> = ArrayList()
 
-        currentInput.add(getInvStack(0).item)
-        currentInput.add(getInvStack(1).item)
+        if (!getInvStack(0).isEmpty) {
+            currentInput.add(getInvStack(0).item)
+        }
+        if (!getInvStack(1).isEmpty) {
+            currentInput.add(getInvStack(1).item)
+        }
 
-        if (currentInput != input) {
+        if (currentInput.isEmpty() && input.isEmpty()) {
+            ticksRemaining = 1000
+        }
+        else if (currentInput != input) {
             input = currentInput
-            output = TSRecipies.getOutput(machine, getInvStack(0).item, getInvStack(1).item)
+            output = TSRecipies.getOutput(machine!!, getInvStack(0).item, getInvStack(1).item)
             ticksRemaining = 1000
         }
         else if(ticksRemaining > 0) {
             ticksRemaining -= 1
         }
         else {
-
-            if (getInvStack(2).item == output[0] && getInvStack(3).item == output[1]) {
-                takeInvStack(0, 1)
-                takeInvStack(1, 1)
-                setInvStack(2, ItemStack(output[0], 1 + getInvStack(2).amount))
-                setInvStack(3, ItemStack(output[1], 1 + getInvStack(3).amount))
-                print("There is " + getInvStack(0) + " iron ore remaining.")
-                print("There are " + getInvStack(2) + " iron ingots in the output.")
+            takeInvStack(0, 1)
+            takeInvStack(1, 1)
+            if (getInvStack(2).isEmpty) {
+                setInvStack(2, ItemStack(output[0], 1))
             }
+            else if (getInvStack(2).item == output[0]) {
+                setInvStack(2, ItemStack(output[0], 1 + getInvStack(2).amount))
+            }
+
+            if (getInvStack(3).isEmpty) {
+                setInvStack(2, ItemStack(output[1], 1))
+            }
+            else if (getInvStack(3).item == output[0]) {
+                setInvStack(3, ItemStack(output[1], 1 + getInvStack(3).amount))
+            }
+
+            print("There is " + getInvStack(0).amount + " iron ore remaining.")
+            print("There are " + getInvStack(2).amount + " iron ingots in the output.")
         }
     }
 
@@ -148,5 +160,10 @@ class MachineBlockEntity(type : BlockEntityType<MachineBlockEntity>) : BlockEnti
 
     override fun hasCustomName(): Boolean {
         return false
+    }
+
+    //Furnace
+    class FuranceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.furnaceMachineType) {
+        override var machine: Machine? = Machine.FURNACE
     }
 }

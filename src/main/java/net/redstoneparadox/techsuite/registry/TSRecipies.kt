@@ -42,19 +42,28 @@ object TSRecipies {
         }
     }
 
-    fun getOutput(machine : Machine, in1: Item, in2: Item? = ItemStack.EMPTY.item) : ArrayList<Item?> {
+    fun getOutput(machine : Machine, in1: Item, in2: Item?) : ArrayList<Item?> {
         var input : ArrayList<Item?> = ArrayList()
 
         input.add(in1)
-        input.add(in2)
+        if (in2 != null) {
+            input.add(in2)
+        }
 
-        return when(machine) {
+        var output = when(machine) {
             Machine.FURNACE -> furnaceRecipes[input]
             Machine.BLAST_FURNACE -> blastFurnaceRecipes[input]
             Machine.SMOKER -> smokerRecipes[input]
             Machine.CRUSHER -> crusherRecipes[input]
             Machine.GRINDER -> grinderRecipes[input]
             Machine.MIXER -> mixerRecipes[input]
-        } as ArrayList
+        }
+
+        if (output == null || output.isEmpty()) {
+            return ArrayList()
+        }
+        else {
+            return output
+        }
     }
 }
