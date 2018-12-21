@@ -23,6 +23,9 @@ class MachineRecipe(val inputOne : Item, val inputTwo : Item? = null, val output
         if (outputTwo != null) {
             outputArrayList.add(ItemStack(outputTwo))
         }
+        else {
+            outputArrayList.add(ItemStack.EMPTY)
+        }
 
         return outputArrayList
     }

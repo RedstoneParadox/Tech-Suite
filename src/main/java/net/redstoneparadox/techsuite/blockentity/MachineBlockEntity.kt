@@ -1,18 +1,17 @@
-package net.redstoneparadox.techsuite.blockentities
+package net.redstoneparadox.techsuite.blockentity
 
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.text.TextComponent
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.InventoryUtil
 import net.minecraft.util.Tickable
-import net.redstoneparadox.techsuite.registry.BlockEntityRegistry
-import net.redstoneparadox.techsuite.registry.TSRecipies
+import net.redstoneparadox.techsuite.recipe.MachineRecipe
+import net.redstoneparadox.techsuite.registry.RecipeRegistry
 import net.redstoneparadox.techsuite.util.Machine
 
 
@@ -24,58 +23,45 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type)
 
     open val machine : Machine? = null
     private val inventory = DefaultedList.create(invSize, ItemStack.EMPTY)
-    var input : ArrayList<Item?> = ArrayList()
-    var output : ArrayList<Item?> = ArrayList()
-    var ticksRemaining = 1000
+    var ticksRemaining = 200
     var test = true
+    var machineRecipe : MachineRecipe? = null
 
     override fun tick() {
 
-        if (test == true && machine == Machine.FURNACE) {
+        if (test && machine == Machine.FURNACE) {
             setInvStack(1, ItemStack(Blocks.IRON_ORE.item, 64))
             test = false
         }
 
-        val currentInput : ArrayList<Item?> = ArrayList()
-
-        if (!getInvStack(0).isEmpty) {
-            currentInput.add(getInvStack(0).item)
+        if (machineRecipe == null || machineRecipe!!.matchInput(getInvStack(1).item, getInvStack(2).item)){
+            machineRecipe = RecipeRegistry.getRecipe(machine!!, getInvStack(0).item, getInvStack(1).item)
+            ticksRemaining = 200
         }
-        if (!getInvStack(1).isEmpty) {
-            currentInput.add(getInvStack(1).item)
-        }
-
-        if (currentInput.isEmpty() && input.isEmpty()) {
-            ticksRemaining = 1000
-        }
-        else if (currentInput != input) {
-            input = currentInput
-            output = TSRecipies.getOutput(machine!!, getInvStack(0).item, getInvStack(1).item)
-            ticksRemaining = 1000
-        }
-        else if(ticksRemaining > 0) {
-            ticksRemaining -= 1
+        else if (ticksRemaining > 0) {
+            ticksRemaining -=1
         }
         else {
-            takeInvStack(0, 1)
-            takeInvStack(1, 1)
-            if (getInvStack(2).isEmpty) {
-                setInvStack(2, ItemStack(output[0], 1))
-            }
-            else if (getInvStack(2).item == output[0]) {
-                setInvStack(2, ItemStack(output[0], 1 + getInvStack(2).amount))
-            }
+            val output : ArrayList<ItemStack> = machineRecipe!!.getOutput()
 
-            if (getInvStack(3).isEmpty) {
-                setInvStack(2, ItemStack(output[1], 1))
+            if (getInvStack(2) == ItemStack.EMPTY && getInvStack(3) == ItemStack.EMPTY) {
+                craft(output)
             }
-            else if (getInvStack(3).item == output[0]) {
-                setInvStack(3, ItemStack(output[1], 1 + getInvStack(3).amount))
+            else if (getInvStack(2) == output[0] && getInvStack(3) == output[1]) {
+                craft(output)
             }
-
-            print("There is " + getInvStack(0).amount + " iron ore remaining.")
-            print("There are " + getInvStack(2).amount + " iron ingots in the output.")
         }
+    }
+
+    fun craft(output : ArrayList<ItemStack>) {
+        takeInvStack(0, 1)
+        takeInvStack(1, 1)
+
+        setInvStack(2, output[0])
+        setInvStack(3, output[1])
+
+        System.out.println("There is " + getInvStack(0).amount + " iron ore remaining.")
+        System.out.println("There are " + getInvStack(2).amount + " iron ingots in the output.")
     }
 
     override fun markDirty() {
@@ -160,10 +146,5 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type)
 
     override fun hasCustomName(): Boolean {
         return false
-    }
-
-    //Furnace
-    class FuranceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.furnaceMachineType) {
-        override var machine: Machine? = Machine.FURNACE
     }
 }

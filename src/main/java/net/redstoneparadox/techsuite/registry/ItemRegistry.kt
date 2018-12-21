@@ -8,7 +8,7 @@ import net.redstoneparadox.techsuite.TechSuite
 /**
  * Created by RedstoneParadox on 12/17/2018.
  */
-object TSItems {
+object ItemRegistry {
 
     //Ingots
     lateinit var ingotCopper: Item

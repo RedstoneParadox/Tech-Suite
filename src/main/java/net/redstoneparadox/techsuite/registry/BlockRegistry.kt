@@ -8,22 +8,19 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import net.redstoneparadox.techsuite.TechSuite
-import net.redstoneparadox.techsuite.blocks.MachineBlock
-import net.redstoneparadox.techsuite.blocks.MyFirstBlock
+import net.redstoneparadox.techsuite.block.MachineBlock
 import net.redstoneparadox.techsuite.util.Machine
 
 /**
  * Created by RedstoneParadox on 12/17/2018.
  */
-object TSBlocks {
+object BlockRegistry {
 
     lateinit var myFirstBlock: Block
 
     lateinit var poweredFurnace: MachineBlock
 
     fun initBlocks() {
-        myFirstBlock = registerBlock("my_first_block", MyFirstBlock(constructSettings()))
-
         poweredFurnace = registerBlock("powered_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.FURNACE)) as MachineBlock
     }
 
