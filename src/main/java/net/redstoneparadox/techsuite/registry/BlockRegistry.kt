@@ -19,9 +19,19 @@ object BlockRegistry {
     lateinit var myFirstBlock: Block
 
     lateinit var poweredFurnace: MachineBlock
+    lateinit var poweredBlastFurnace: MachineBlock
+    lateinit var poweredSmoker: MachineBlock
+    lateinit var poweredCrusher: MachineBlock
+    lateinit var poweredGrinder: MachineBlock
+    lateinit var poweredMixer: MachineBlock
 
     fun initBlocks() {
         poweredFurnace = registerBlock("powered_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.FURNACE)) as MachineBlock
+        poweredBlastFurnace = registerBlock("powered_blast_furnace", MachineBlock(constructSettings(material = Material.METAL), Machine.BLAST_FURNACE)) as MachineBlock
+        poweredSmoker = registerBlock("powered_smoker", MachineBlock(constructSettings(material = Material.METAL), Machine.SMOKER)) as MachineBlock
+        poweredCrusher = registerBlock("powered_crusher", MachineBlock(constructSettings(material = Material.METAL), Machine.CRUSHER)) as MachineBlock
+        poweredGrinder = registerBlock("powered_grinder", MachineBlock(constructSettings(material = Material.METAL), Machine.GRINDER)) as MachineBlock
+        poweredMixer = registerBlock("powered_mixer", MachineBlock(constructSettings(material = Material.METAL), Machine.MIXER)) as MachineBlock
     }
 
     fun registerBlock(name : String, block: Block) : Block {
