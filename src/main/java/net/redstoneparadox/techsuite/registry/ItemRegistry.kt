@@ -1,6 +1,9 @@
 package net.redstoneparadox.techsuite.registry
 
+import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraft.item.ItemGroup
+import net.minecraft.item.block.BlockItem
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import net.redstoneparadox.techsuite.TechSuite
@@ -13,61 +16,106 @@ object ItemRegistry {
     //Ingots
     lateinit var COPPER_INGOT: Item
     lateinit var TIN_INGOT: Item
+    lateinit var ALUMINUM_INGOT: Item
     //Gears
     lateinit var STONE_GEAR: Item
     lateinit var IRON_GEAR: Item
     lateinit var GOLD_GEAR: Item
     lateinit var COPPER_GEAR: Item
     lateinit var TIN_GEAR: Item
+    lateinit var ALUMINUM_GEAR: Item
+    //Plates
+    lateinit var IRON_PLATE: Item
+    lateinit var GOLD_PLATE: Item
+    lateinit var COPPER_PLATE: Item
+    lateinit var TIN_PLATE: Item
+    lateinit var ALUMINUM_PLATE: Item
+    //Nuggets
+    lateinit var COPPER_NUGGET: Item
+    lateinit var TIN_NUGGET: Item
+    lateinit var ALUMINUM_NUGGET: Item
+    //
+    //Machines
+    lateinit var POWERED_FURNACE: Item
+    lateinit var POWERED_BLAST_FURNACE: Item
+    lateinit var POWERED_SMOKER: Item
+    lateinit var POWERED_CRUSHER: Item
+    lateinit var POWERED_GRINDER: Item
+    lateinit var POWERED_MIXER: Item
 
     enum class IngredientType(val suffix: String) {
         INGOT("_ingot"),
-        GEAR("_gear"),
+        NUGGET("_nugget"),
         PLATE("_plate"),
-        NUGGET("_nugget")
+        GEAR("_gear")
     }
 
-    enum class IngredientMaterial(val prefix: String) {
+    enum class Material(val prefix: String) {
         STONE("stone"),
         IRON("iron"),
         GOLD("gold"),
         DIAMOND("diamond"),
         COPPER("copper"),
-        TIN("tin")
+        TIN("tin"),
+        ALUMINUM("aluminum"),
     }
 
     fun initItems() {
         //Ingots
-        COPPER_INGOT = registerItem(IngredientMaterial.COPPER, IngredientType.INGOT)
-        TIN_INGOT = registerItem(IngredientMaterial.TIN, IngredientType.INGOT)
+        COPPER_INGOT = registerItem(Material.COPPER, IngredientType.INGOT)
+        TIN_INGOT = registerItem(Material.TIN, IngredientType.INGOT)
+        ALUMINUM_INGOT = registerItem(Material.ALUMINUM, IngredientType.INGOT)
+        //Nuggets
+        COPPER_NUGGET = registerItem(Material.COPPER, IngredientType.NUGGET)
+        TIN_NUGGET = registerItem(Material.TIN, IngredientType.NUGGET)
+        ALUMINUM_NUGGET = registerItem(Material.ALUMINUM, IngredientType.NUGGET)
+        //Plates
+        IRON_PLATE = registerItem(Material.IRON, IngredientType.PLATE)
+        GOLD_PLATE = registerItem(Material.GOLD, IngredientType.PLATE)
+        COPPER_PLATE = registerItem(Material.COPPER, IngredientType.PLATE)
+        TIN_PLATE = registerItem(Material.TIN, IngredientType.PLATE)
+        ALUMINUM_PLATE = registerItem(Material.ALUMINUM, IngredientType.PLATE)
         //Gears
-        STONE_GEAR = registerItem(IngredientMaterial.STONE, IngredientType.GEAR)
-        IRON_GEAR = registerItem(IngredientMaterial.IRON, IngredientType.GEAR)
-        GOLD_GEAR = registerItem(IngredientMaterial.GOLD, IngredientType.GEAR)
-        COPPER_GEAR = registerItem(IngredientMaterial.COPPER, IngredientType.GEAR)
-        TIN_GEAR = registerItem(IngredientMaterial.TIN, IngredientType.GEAR)
+        STONE_GEAR = registerItem(Material.STONE, IngredientType.GEAR)
+        IRON_GEAR = registerItem(Material.IRON, IngredientType.GEAR)
+        GOLD_GEAR = registerItem(Material.GOLD, IngredientType.GEAR)
+        COPPER_GEAR = registerItem(Material.COPPER, IngredientType.GEAR)
+        TIN_GEAR = registerItem(Material.TIN, IngredientType.GEAR)
+        ALUMINUM_GEAR = registerItem(Material.ALUMINUM, IngredientType.GEAR)
+        //
+        //Machines
+        POWERED_FURNACE = registerBlockItem(BlockRegistry.POWERED_FURNACE, ItemGroup.REDSTONE)
+        POWERED_BLAST_FURNACE = registerBlockItem(BlockRegistry.POWERED_BLAST_FURNACE, ItemGroup.REDSTONE)
+        POWERED_SMOKER = registerBlockItem(BlockRegistry.POWERED_SMOKER, ItemGroup.REDSTONE)
+        POWERED_CRUSHER = registerBlockItem(BlockRegistry.POWERED_CRUSHER, ItemGroup.REDSTONE)
+        POWERED_GRINDER = registerBlockItem(BlockRegistry.POWERED_GRINDER, ItemGroup.REDSTONE)
+        POWERED_MIXER = registerBlockItem(BlockRegistry.POWERED_MIXER, ItemGroup.REDSTONE)
     }
 
     fun registerItem(name: String, item: Item) : Item {
         var id = Identifier(TechSuite.MOD_ID, name)
 
+        if (item is BlockItem) {
+            item.registerBlockItemMap(Item.BLOCK_ITEM_MAP, item)
+        }
+
         return Registry.register(Registry.ITEM, id, item)
     }
 
-    fun registerItem(material : IngredientMaterial, type : IngredientType) : Item {
-        var identifier : Identifier
+    fun registerItem(material : Material, type : IngredientType) : Item {
+        var identifier : Identifier = Identifier(TechSuite.MOD_ID, (material.prefix + type.suffix))
+        return Registry.register(Registry.ITEM, identifier, Item(Item.Settings().itemGroup(ItemGroup.MISC)))
+    }
 
-        when (type) {
-            IngredientType.INGOT ->
-                identifier = Identifier(TechSuite.MOD_ID, material.prefix + type.suffix)
-            IngredientType.GEAR ->
-                identifier = Identifier(TechSuite.MOD_ID, material.prefix + type.suffix)
-            IngredientType.PLATE ->
-                identifier = Identifier(TechSuite.MOD_ID, material.prefix + type.suffix)
-            IngredientType.NUGGET ->
-                identifier = Identifier(TechSuite.MOD_ID, material.prefix + type.suffix)
-        }
+    fun registerBlockItem(block : Block, itemGroup: ItemGroup): Item {
+        return register(BlockItem(block, (Item.Settings()).itemGroup(itemGroup)))
+    }
 
-        return Registry.register(Registry.ITEM, identifier, Item(Item.Settings()))
+    fun register(blockItem: BlockItem): Item {
+        return register(blockItem.block as Block, blockItem)
+    }
+
+    fun register(block: Block, item: Item): Item {
+        return registerItem(Registry.BLOCK.getId(block).path, item)
     }
 }

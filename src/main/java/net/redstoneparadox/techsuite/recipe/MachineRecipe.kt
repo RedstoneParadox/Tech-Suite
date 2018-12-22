@@ -2,11 +2,12 @@ package net.redstoneparadox.techsuite.recipe
 
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 
 /**
  * Created by RedstoneParadox on 12/20/2018.
  */
-class MachineRecipe(private val inputOne : Item, private val inputTwo : Item? = null, private val outputOne : Item, private val outputTwo : Item? = null) {
+class MachineRecipe(val inputOne : Item, val inputTwo : Item? = Items.AIR, val outputOne : Item, val outputTwo : Item? = Items.AIR) {
 
     fun matchInput(inputOne: Item, inputTwo: Item?) : Boolean {
         if (inputOne == this.inputOne && inputTwo == this.inputTwo) {

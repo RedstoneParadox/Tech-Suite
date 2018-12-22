@@ -1,5 +1,6 @@
 package net.redstoneparadox.techsuite.blockentity
 
+import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
@@ -25,14 +26,33 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
     var ticksRemaining = 200
     var machineRecipe : MachineRecipe = RecipeRegistry.EMPTY_RECIPE
 
+    var test : Boolean = true
+
     override fun tick() {
 
-        if (machineRecipe.matchInput(getInvStack(1).item, getInvStack(2).item)){
+        if (test) {
+            setInvStack(0, ItemStack(Blocks.IRON_ORE.item, 64))
+            test = false
+        }
+
+        System.out.println("1:" + getInvStack(0))
+        System.out.println("2:" + getInvStack(1))
+        System.out.println("3:" + getInvStack(2))
+        System.out.println("4:" + getInvStack(3))
+        System.out.println("------------")
+
+        if (!machineRecipe.matchInput(getInvStack(0).item, getInvStack(1).item)){
             machineRecipe = RecipeRegistry.getRecipe(machine!!, getInvStack(0).item, getInvStack(1).item)
             ticksRemaining = 200
         }
         else if (ticksRemaining > 0) {
-            ticksRemaining -=1
+
+            if (machineRecipe == RecipeRegistry.EMPTY_RECIPE) {
+                ticksRemaining = 200
+            }
+            else {
+                ticksRemaining -= 1
+            }
         }
         else {
             val output : ArrayList<ItemStack> = machineRecipe.getOutput()
@@ -40,7 +60,7 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
             if (getInvStack(2) == ItemStack.EMPTY && getInvStack(3) == ItemStack.EMPTY) {
                 craft(output)
             }
-            else if (getInvStack(2) == output[0] && getInvStack(3) == output[1]) {
+            else if (getInvStack(2).item == output[0].item && getInvStack(3).item == output[1].item && canOutput()) {
                 craft(output)
             }
         }
@@ -50,8 +70,31 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
         takeInvStack(0, 1)
         takeInvStack(1, 1)
 
-        setInvStack(2, output[0])
-        setInvStack(3, output[1])
+        if (getInvStack(2).isEmpty) {
+            setInvStack(2, output[0])
+        }
+        else {
+            val outputStack = output[0]
+            outputStack.amount = outputStack.amount + getInvStack(2).amount
+            setInvStack(2, outputStack)
+        }
+
+        if (getInvStack(3).isEmpty) {
+            setInvStack(3, output[1])
+        }
+        else {
+            val outputStack = output[1]
+            outputStack.amount + getInvStack(3).amount
+            setInvStack(3, outputStack)
+        }
+    }
+
+    fun canOutput() : Boolean {
+        if (getInvStack(2).amount < invMaxStackAmount && getInvStack(3).amount < invMaxStackAmount) {
+            return true
+        }
+
+        return false
     }
 
     override fun markDirty() {

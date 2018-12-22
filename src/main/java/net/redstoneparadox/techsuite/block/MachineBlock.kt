@@ -1,8 +1,8 @@
 package net.redstoneparadox.techsuite.block
 
+import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
-import net.minecraft.block.RenderTypeBlock
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.world.BlockView
 import net.redstoneparadox.techsuite.blockentity.MachineBlockEntity
@@ -27,8 +27,8 @@ class MachineBlock(settings: Settings?, var machine: Machine) : BlockWithEntity(
 
     }
 
-    override fun getRenderType(var1: BlockState?): RenderTypeBlock {
-        return RenderTypeBlock.MODEL
+    override fun getRenderType(var1: BlockState?): BlockRenderType {
+        return BlockRenderType.MODEL
     }
 
     //Furnace machine block entity

@@ -16,8 +16,6 @@ import net.redstoneparadox.techsuite.util.Machine
  */
 object BlockRegistry {
 
-    lateinit var myFirstBlock: Block
-
     lateinit var POWERED_FURNACE: MachineBlock
     lateinit var POWERED_BLAST_FURNACE: MachineBlock
     lateinit var POWERED_SMOKER: MachineBlock
