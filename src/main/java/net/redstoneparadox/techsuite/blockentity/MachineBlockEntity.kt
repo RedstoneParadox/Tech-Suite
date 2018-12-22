@@ -35,12 +35,6 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
             test = false
         }
 
-        System.out.println("1:" + getInvStack(0))
-        System.out.println("2:" + getInvStack(1))
-        System.out.println("3:" + getInvStack(2))
-        System.out.println("4:" + getInvStack(3))
-        System.out.println("------------")
-
         if (!machineRecipe.matchInput(getInvStack(0).item, getInvStack(1).item)){
             machineRecipe = RecipeRegistry.getRecipe(machine!!, getInvStack(0).item, getInvStack(1).item)
             ticksRemaining = 200
@@ -87,6 +81,13 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
             outputStack.amount + getInvStack(3).amount
             setInvStack(3, outputStack)
         }
+
+        System.out.println("1:" + getInvStack(0))
+        System.out.println("2:" + getInvStack(1))
+        System.out.println("3:" + getInvStack(2))
+        System.out.println("4:" + getInvStack(3))
+        System.out.println("------------")
+        ticksRemaining = 200
     }
 
     fun canOutput() : Boolean {
