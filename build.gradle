@@ -1,37 +1,29 @@
-buildscript {
-	ext.kotlin_version = '1.3.11'
-
-	repositories {
-		mavenCentral()
-	}
-
-	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.11"
-	}
-}
-
 plugins {
-	id 'fabric-loom' version '0.1.0-SNAPSHOT'
-	id "org.jetbrains.kotlin.jvm" version "1.3.11"
+	id 'fabric-loom' version '0.2.0-SNAPSHOT'
+	id "org.jetbrains.kotlin.jvm" version "1.3.10"
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-archivesBaseName = "tech_suite"
+archivesBaseName = "techsuite"
 version = "0.1.0"
 
 minecraft {
 }
 
+configurations.runtimeOnly.extendsFrom(configurations.modCompile)
+
 dependencies {
 	minecraft "com.mojang:minecraft:18w50a"
-	mappings "net.fabricmc:yarn:18w50a.56"
-	modCompile "net.fabricmc:fabric-loader:0.2.0.71"
+	mappings "net.fabricmc:yarn:18w50a.73"
+	modCompile "net.fabricmc:fabric-loader:0.3.0.77"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc:fabric:0.1.1.60"
-	modCompile "net.fabricmc:fabric-language-kotlin:1.3.10-26"
-
-	compile "org.jetbrains.kotlin:kotlin-stdlib"
+	modCompile "net.fabricmc:fabric:0.1.2.64"
+	runtimeOnly(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.10-27")
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+repositories {
+	mavenCentral()
 }

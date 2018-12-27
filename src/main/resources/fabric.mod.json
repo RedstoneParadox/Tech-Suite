@@ -1,12 +1,16 @@
 {
   "id": "tech_suite",
   "name": "Tech Suite",
-  "description": "Banana!",
+  "description": "Because technology is 'Suite'!",
   "version": "0.1.0",
   "side": "universal",
-  "initializer": "net.redstoneparadox.techsuite.TechSuite",
+  "initializer" : "net.redstoneparadox.techsuite.TechSuite",
+  "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter",
   "requires": {
-    "fabric": "*"
+    "fabric": "*",
+    "fabric-language-kotlin": {
+      "version": ">=1.3.10"
+    }
   },
   "mixins": {
     "client": "mixin.techsuite.client.json",

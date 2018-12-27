@@ -1,10 +1,7 @@
 package net.redstoneparadox.techsuite
 
 import net.fabricmc.api.ModInitializer
-import net.redstoneparadox.techsuite.registry.BlockEntityRegistry
-import net.redstoneparadox.techsuite.registry.BlockRegistry
-import net.redstoneparadox.techsuite.registry.ItemRegistry
-import net.redstoneparadox.techsuite.registry.RecipeRegistry
+import net.redstoneparadox.techsuite.registry.*
 
 /**
  * Created by RedstoneParadox on 12/17/2018.
@@ -12,6 +9,7 @@ import net.redstoneparadox.techsuite.registry.RecipeRegistry
 class TechSuite : ModInitializer {
 
     override fun onInitialize() {
+        ContainerRegistry.initContainers()
         BlockEntityRegistry.initBlockEntities()
         BlockRegistry.initBlocks()
         ItemRegistry.initItems()

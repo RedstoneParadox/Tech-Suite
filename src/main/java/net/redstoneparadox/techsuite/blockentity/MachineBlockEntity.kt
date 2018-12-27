@@ -3,9 +3,12 @@ package net.redstoneparadox.techsuite.blockentity
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.container.Container
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.text.TextComponent
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.InventoryUtil
@@ -58,6 +61,8 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
                 craft(output)
             }
         }
+
+        this.markDirty()
     }
 
     fun craft(output : ArrayList<ItemStack>) {
@@ -98,8 +103,83 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
         return false
     }
 
-    override fun markDirty() {
+    override fun fromTag(tag: CompoundTag) {
+        var machineData : CompoundTag = CompoundTag()
+        var inventoryData : CompoundTag = CompoundTag()
 
+        if (tag.containsKey("machine_data")) {
+            machineData = tag.getCompound("machine_data")
+            ticksRemaining = machineData.getInt("ticks_remaining")
+
+            if (machineData.containsKey("test")) {
+                test = machineData.getBoolean("test")
+            }
+        }
+
+        if (tag.containsKey("inventory")) {
+            inventoryData = tag.getCompound("inventory")
+
+            var inputData = inventoryData.getCompound("input")
+            var outputData = inventoryData.getCompound("output")
+
+            var inputStackOne : ItemStack = ItemStack.fromTag(inputData.getCompound("0"))
+            var inputStackTwo : ItemStack = ItemStack.fromTag(inputData.getCompound("1"))
+            var outputStackOne : ItemStack = ItemStack.fromTag(outputData.getCompound("0"))
+            var outputStackTwo : ItemStack = ItemStack.fromTag(outputData.getCompound("1"))
+
+            setInvStack(0, inputStackOne)
+            setInvStack(1, inputStackTwo)
+            setInvStack(2, outputStackOne)
+            setInvStack(3, outputStackTwo)
+        }
+        super.fromTag(tag)
+    }
+
+    override fun toTag(tag: CompoundTag): CompoundTag {
+        val machineData : CompoundTag = CompoundTag()
+
+        machineData.putInt("ticks_remaining", ticksRemaining)
+        machineData.putBoolean("test", test)
+        tag.put("machine_data", machineData)
+
+        val inputData : CompoundTag = CompoundTag()
+        val outputData : CompoundTag = CompoundTag()
+        val inventoryData : CompoundTag = CompoundTag()
+
+        val airStack : ItemStack = ItemStack(Items.AIR)
+
+        if (getInvStack(0).isEmpty) {
+            inputData.put("0", airStack.toTag(CompoundTag()))
+        }
+        else {
+            inputData.put("0", getInvStack(0).toTag(CompoundTag()))
+        }
+
+        if (getInvStack(1).isEmpty) {
+            inputData.put("1", airStack.toTag(CompoundTag()))
+        }
+        else {
+            inputData.put("1", getInvStack(1).toTag(CompoundTag()))
+        }
+        inventoryData.put("input", inputData)
+
+        if (getInvStack(2).isEmpty) {
+            outputData.put("0", airStack.toTag(CompoundTag()))
+        }
+        else {
+            outputData.put("0", getInvStack(2).toTag(CompoundTag()))
+        }
+
+        if (getInvStack(3).isEmpty) {
+            outputData.put("1", airStack.toTag(CompoundTag()))
+        }
+        else {
+            outputData.put("1", getInvStack(3).toTag(CompoundTag()))
+        }
+        inventoryData.put("output", outputData)
+        tag.put("inventory", inventoryData)
+
+        return super.toTag(tag)
     }
 
     //Inventory functions
@@ -180,5 +260,9 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
 
     override fun hasCustomName(): Boolean {
         return false
+    }
+
+    fun createContainer(playerEntity: PlayerEntity?): Container? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
