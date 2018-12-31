@@ -6,6 +6,7 @@ import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.world.BlockView
 import net.redstoneparadox.techsuite.blockentity.MachineBlockEntity
+import net.redstoneparadox.techsuite.energy.EnergyNode
 import net.redstoneparadox.techsuite.registry.BlockEntityRegistry
 import net.redstoneparadox.techsuite.util.Machine
 
@@ -33,31 +34,37 @@ class MachineBlock(settings: Settings?, var machine: Machine) : BlockWithEntity(
 
     //Furnace machine block entity
     class FurnaceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.FURNACE_MACHINE) {
+        override var energyNode: EnergyNode = EnergyNode(0)
         override val machine: Machine? = Machine.FURNACE
     }
 
     //Blast furnace machine block entity.
     class BlastFurnaceMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.BLAST_FURNACE_MACHINE) {
+        override var energyNode: EnergyNode = EnergyNode(0)
         override val machine: Machine? = Machine.FURNACE
     }
 
     //Smoker machine block entity.
     class SmokerMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.SMOKER_MACHINE) {
+        override var energyNode: EnergyNode = EnergyNode(0)
         override val machine : Machine? = Machine.SMOKER
     }
 
     //Crusher machine block entity.
     class CrusherMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.CRUSHER_MACHINE) {
+        override var energyNode: EnergyNode = EnergyNode(0)
         override val machine : Machine? = Machine.CRUSHER
     }
 
     //Grinder machine block entity.
     class GrinderMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.GRINDER_MACHINE) {
+        override var energyNode: EnergyNode = EnergyNode(0)
         override val machine : Machine? = Machine.GRINDER
     }
 
     //Mixer machine block entity.
     class MixerMachineBlockEntity : MachineBlockEntity(BlockEntityRegistry.MIXER_MACHINE) {
+        override var energyNode: EnergyNode = EnergyNode(0)
         override val machine : Machine? = Machine.MIXER
     }
 }

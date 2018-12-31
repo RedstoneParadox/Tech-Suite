@@ -4,7 +4,11 @@
   "description": "Because technology is 'Suite'!",
   "version": "0.1.0",
   "side": "universal",
-  "initializer" : "net.redstoneparadox.techsuite.TechSuite",
+  "initializers": [
+    "net.redstoneparadox.techsuite.cardboardbox.CardboardBox",
+    "net.redstoneparadox.techsuite.TechSuite",
+    "net.redstoneparadox.techsuite.client.TechSuiteClient"
+  ],
   "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter",
   "requires": {
     "fabric": "*",

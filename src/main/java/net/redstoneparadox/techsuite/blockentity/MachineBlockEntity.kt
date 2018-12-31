@@ -13,6 +13,7 @@ import net.minecraft.text.TextComponent
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.InventoryUtil
 import net.minecraft.util.Tickable
+import net.redstoneparadox.techsuite.energy.IEnergyUser
 import net.redstoneparadox.techsuite.recipe.MachineRecipe
 import net.redstoneparadox.techsuite.registry.RecipeRegistry
 import net.redstoneparadox.techsuite.util.Machine
@@ -22,7 +23,7 @@ import net.redstoneparadox.techsuite.util.Machine
 /**
  * Created by RedstoneParadox on 12/18/2018.
  */
-abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type), Tickable, Inventory{
+abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type), Tickable, Inventory, IEnergyUser{
 
     open val machine : Machine? = null
     private val inventory = DefaultedList.create(invSize, ItemStack.EMPTY)
@@ -136,6 +137,8 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
     }
 
     override fun toTag(tag: CompoundTag): CompoundTag {
+        energyNode.tick()
+
         val machineData : CompoundTag = CompoundTag()
 
         machineData.putInt("ticks_remaining", ticksRemaining)

@@ -32,13 +32,13 @@ object BlockRegistry {
         POWERED_MIXER = registerBlock("powered_mixer", MachineBlock(constructSettings(material = Material.METAL), Machine.MIXER)) as MachineBlock
     }
 
-    private fun registerBlock(name : String, block: Block) : Block {
+    fun registerBlock(name : String, block: Block) : Block {
         var id = Identifier(TechSuite.MOD_ID, name)
 
         return Registry.register(Registry.BLOCK, id, block) as Block
     }
 
-    private fun constructSettings(
+    fun constructSettings(
             material: Material = Material.AIR,
             color: MaterialColor = MaterialColor.AIR,
             collidable : Boolean = true,
@@ -48,7 +48,7 @@ object BlockRegistry {
             resistance: Float = 1.5f,
             randomTicks: Boolean = false,
             slipperiness: Float = 0.6f,
-            dropTableName : String = "missingno"
+            dropTableName : String? = null
     )
             : Block.Settings {
         var settings : FabricBlockSettings = FabricBlockSettings.of(material, color)
@@ -64,7 +64,7 @@ object BlockRegistry {
 
         settings = settings.friction(slipperiness)
 
-        if (dropTableName == "missingno") {
+        if (dropTableName == null) {
             settings = settings.dropsNothing()
         }
         else {
