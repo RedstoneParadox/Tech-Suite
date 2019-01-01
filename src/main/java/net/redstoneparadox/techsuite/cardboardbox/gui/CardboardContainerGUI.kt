@@ -17,7 +17,6 @@ class CardboardContainerGUI(cardboardContainer: CardboardContainer) : ContainerG
     var guiTree : GuiTree
 
     init {
-        cardboardContainer.inventroyToSlots()
         var blockEntityController : GuiController = cardboardContainer.player.world.getBlockEntity(cardboardContainer.pos) as GuiController
         guiTree = blockEntityController.setup(this, cardboardContainer.player)
     }
