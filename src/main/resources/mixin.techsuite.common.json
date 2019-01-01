@@ -1,8 +1,10 @@
 {
   "required": true,
-  "package": "net.redstoneparadox.techsuite.mixin",
+  "package": "net.redstoneparadox.techsuite.client.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "GuiMixin",
+    "ContainerGuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1

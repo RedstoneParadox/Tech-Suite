@@ -11,7 +11,7 @@ import net.fabricmc.api.ModInitializer
 class CardboardBox : ModInitializer {
 
     override fun onInitialize() {
-        println("Greetings from Cardboard Box!")
+
     }
 
 }

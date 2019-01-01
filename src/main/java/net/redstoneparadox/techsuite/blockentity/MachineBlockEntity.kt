@@ -3,7 +3,7 @@ package net.redstoneparadox.techsuite.blockentity
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.container.Container
+import net.minecraft.client.gui.Gui
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
@@ -11,8 +11,14 @@ import net.minecraft.item.Items
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.text.TextComponent
 import net.minecraft.util.DefaultedList
+import net.minecraft.util.Identifier
 import net.minecraft.util.InventoryUtil
 import net.minecraft.util.Tickable
+import net.redstoneparadox.techsuite.TechSuite
+import net.redstoneparadox.techsuite.cardboardbox.gui.CardboardContainerGUI
+import net.redstoneparadox.techsuite.cardboardbox.gui.GuiTree
+import net.redstoneparadox.techsuite.cardboardbox.misc.GuiController
+import net.redstoneparadox.techsuite.cardboardbox.registry.CardboardGuiTreeRegistry
 import net.redstoneparadox.techsuite.energy.IEnergyUser
 import net.redstoneparadox.techsuite.recipe.MachineRecipe
 import net.redstoneparadox.techsuite.registry.RecipeRegistry
@@ -23,7 +29,7 @@ import net.redstoneparadox.techsuite.util.Machine
 /**
  * Created by RedstoneParadox on 12/18/2018.
  */
-abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type), Tickable, Inventory, IEnergyUser{
+abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type), Tickable, Inventory, IEnergyUser, GuiController{
 
     open val machine : Machine? = null
     private val inventory = DefaultedList.create(invSize, ItemStack.EMPTY)
@@ -31,6 +37,8 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
     var machineRecipe : MachineRecipe = RecipeRegistry.EMPTY_RECIPE
 
     var test : Boolean = true
+
+    var gui : CardboardContainerGUI? = null
 
     override fun tick() {
 
@@ -88,12 +96,8 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
             setInvStack(3, outputStack)
         }
 
-        System.out.println("1:" + getInvStack(0))
-        System.out.println("2:" + getInvStack(1))
-        System.out.println("3:" + getInvStack(2))
-        System.out.println("4:" + getInvStack(3))
-        System.out.println("------------")
         ticksRemaining = 200
+
     }
 
     fun canOutput() : Boolean {
@@ -102,6 +106,11 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
         }
 
         return false
+    }
+
+    override fun setup(gui: Gui, player: PlayerEntity): GuiTree {
+        this.gui = (gui as CardboardContainerGUI)
+        return CardboardGuiTreeRegistry.getComponentTree(Identifier(TechSuite.MOD_ID, "machine"))!!
     }
 
     override fun fromTag(tag: CompoundTag) {
@@ -263,9 +272,5 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
 
     override fun hasCustomName(): Boolean {
         return false
-    }
-
-    fun createContainer(playerEntity: PlayerEntity?): Container? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

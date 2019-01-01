@@ -1,7 +1,6 @@
 package net.redstoneparadox.techsuite
 
 import net.fabricmc.api.ModInitializer
-import net.redstoneparadox.techsuite.containerexample.ContainerMod
 import net.redstoneparadox.techsuite.registry.*
 
 /**
@@ -9,11 +8,7 @@ import net.redstoneparadox.techsuite.registry.*
  */
 class TechSuite : ModInitializer {
 
-    val containerMod: ContainerMod = ContainerMod()
-
     override fun onInitialize() {
-        containerMod.onInitialize()
-
         ContainerRegistry.initContainers()
         BlockEntityRegistry.initBlockEntities()
         BlockRegistry.initBlocks()

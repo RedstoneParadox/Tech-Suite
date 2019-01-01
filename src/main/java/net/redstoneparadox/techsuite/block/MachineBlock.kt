@@ -1,10 +1,18 @@
 package net.redstoneparadox.techsuite.block
 
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.util.Hand
+import net.minecraft.util.Identifier
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
+import net.redstoneparadox.techsuite.TechSuite
 import net.redstoneparadox.techsuite.blockentity.MachineBlockEntity
 import net.redstoneparadox.techsuite.energy.EnergyNode
 import net.redstoneparadox.techsuite.registry.BlockEntityRegistry
@@ -30,6 +38,14 @@ class MachineBlock(settings: Settings?, var machine: Machine) : BlockWithEntity(
 
     override fun getRenderType(var1: BlockState?): BlockRenderType {
         return BlockRenderType.MODEL
+    }
+
+    override fun activate(blockState: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, direction: Direction, float_1: Float, float_2: Float, float_3: Float): Boolean {
+        if (!world.isClient() && hasBlockEntity()) {
+            ContainerProviderRegistry.INSTANCE.openContainer(Identifier(TechSuite.MOD_ID, "machine"), player) { it.writeBlockPos(pos) }
+        }
+
+        return super.activate(blockState, world, pos, player, hand, direction, float_1, float_2, float_3)
     }
 
     //Furnace machine block entity

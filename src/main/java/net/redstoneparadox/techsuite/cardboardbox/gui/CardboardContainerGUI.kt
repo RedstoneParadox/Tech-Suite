@@ -1,44 +1,42 @@
 package net.redstoneparadox.techsuite.cardboardbox.gui
 
 import net.minecraft.client.gui.ContainerGui
-import net.redstoneparadox.techsuite.cardboardbox.gui.components.AbstractGUIComponent
-import net.redstoneparadox.techsuite.cardboardbox.gui.components.ComponentTree
+import net.redstoneparadox.techsuite.cardboardbox.gui.components.GuiTreeComponent
+import net.redstoneparadox.techsuite.cardboardbox.hooks.IGui
 import net.redstoneparadox.techsuite.cardboardbox.misc.CardboardContainer
 import net.redstoneparadox.techsuite.cardboardbox.misc.GuiController
 
 /**
  * Created by RedstoneParadox on 12/30/2018.
  */
-class CardboardContainerGUI(cardboardContainer: CardboardContainer) : ContainerGui(cardboardContainer) {
+class CardboardContainerGUI(cardboardContainer: CardboardContainer) : ContainerGui(cardboardContainer), IGui {
 
     var float: Float = 0f
     var int1: Int = 0
     var int2: Int = 0
+    var guiTree : GuiTree
 
     init {
-
+        cardboardContainer.inventroyToSlots()
         var blockEntityController : GuiController = cardboardContainer.player.world.getBlockEntity(cardboardContainer.pos) as GuiController
-
-        blockEntityController.initController(this, cardboardContainer.player)
+        guiTree = blockEntityController.setup(this, cardboardContainer.player)
     }
 
-    var componentTree : ComponentTree? = null
-
-    fun updateGui() {
-        drawBackground(float, int1, int2)
+    override fun setup() {
+        guiTree.setup(this)
     }
 
     override fun drawBackground(p0: Float, p1: Int, p2: Int) {
-        if (componentTree != null && fontRenderer != null) {
-            componentTree!!.drawChildren(this, p0, p1, p2, fontRenderer)
-        }
+
+        this.float = p0
+        this.int1 = p1
+        this.int2 = p2
+
+        guiTree.drawChildren(this, p0, p1, p2, fontRenderer)
+
     }
 
-    fun getChild(name : String) : AbstractGUIComponent? {
-        if (componentTree != null) {
-            return componentTree!!.getChild(name)
-        }
-
-        else return null
+    fun getChild(name : String) : GuiTreeComponent? {
+        return guiTree.getChild(name)
     }
 }

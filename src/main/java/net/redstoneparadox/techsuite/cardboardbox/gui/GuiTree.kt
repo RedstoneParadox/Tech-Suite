@@ -1,15 +1,27 @@
-package net.redstoneparadox.techsuite.cardboardbox.gui.components
+package net.redstoneparadox.techsuite.cardboardbox.gui
 
 import net.minecraft.client.font.FontRenderer
 import net.minecraft.client.gui.Gui
 import net.minecraft.util.Identifier
+import net.redstoneparadox.techsuite.cardboardbox.gui.components.GuiTreeComponent
 
 /**
  * Created by RedstoneParadox on 12/30/2018.
  */
-class ComponentTree(val identifier: Identifier) {
+class GuiTree(val identifier: Identifier) {
 
-    var children : ArrayList<AbstractGUIComponent> = ArrayList()
+    var children : ArrayList<GuiTreeComponent> = ArrayList()
+
+    fun setup(gui : Gui) {
+
+        if (children.isEmpty()) {
+            return
+        }
+
+        for (child in children) {
+            child.setup(gui)
+        }
+    }
 
     fun drawChildren(gui: Gui, float: Float, int1: Int, int2: Int, fontRenderer: FontRenderer) {
 
@@ -22,7 +34,7 @@ class ComponentTree(val identifier: Identifier) {
         }
     }
 
-    fun getChild(name : String) : AbstractGUIComponent? {
+    fun getChild(name : String) : GuiTreeComponent? {
 
         for (child in children) {
             if (child.name == name) {

@@ -1,9 +1,9 @@
 package net.redstoneparadox.techsuite.registry
 
-import net.fabricmc.fabric.api.client.gui.GuiProviderRegistry
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry
 import net.minecraft.util.Identifier
-import net.redstoneparadox.techsuite.blockentity.MachineBlockEntity
+import net.redstoneparadox.techsuite.TechSuite
+import net.redstoneparadox.techsuite.cardboardbox.misc.CardboardContainer
 
 
 /**
@@ -13,18 +13,11 @@ object ContainerRegistry {
 
     fun initContainers() {
 
-    }
-
-    fun registerContainer(name : String) {
-        ContainerProviderRegistry.INSTANCE.registerFactory(Identifier("assembly", "grinder")) { identifier, playerEntity, packetByteBuf ->
-            val pos = packetByteBuf.readBlockPos()
-            val blockEntity = playerEntity.world.getBlockEntity(pos)
-            if (blockEntity is MachineBlockEntity) {
-                return@registerFactory (blockEntity as MachineBlockEntity).createContainer(playerEntity)
-            }
-            null
+        ContainerProviderRegistry.INSTANCE.registerFactory(Identifier(TechSuite.MOD_ID, "machine")) { identifier, player, buf ->
+            val pos = buf.readBlockPos()
+            CardboardContainer(pos, player)
         }
 
-        GuiProviderRegistry.INSTANCE.registerFactory(Identifier("assembly", "grinder"), null)
     }
+
 }
