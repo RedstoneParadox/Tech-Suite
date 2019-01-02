@@ -14,14 +14,31 @@ class CardboardContainer(var pos: BlockPos, val player : PlayerEntity) : Contain
 
     init {
         println("Opened container, $pos")
-        inventroyToSlots()
+
+        inventoryToSlots()
     }
 
-    fun inventroyToSlots() {
+    fun inventoryToSlots() {
         var inventory : Inventory = player.world.getBlockEntity(pos) as Inventory
 
         for (i in 0..(inventory.invSize - 1)) {
-            slotList.add(Slot(inventory, (i), (20*i), 20))
+            addSlot(Slot(inventory, i, (20*i), 20))
+        }
+
+        for (i in 9..17) {
+            addSlot(Slot(player.inventory, i, (20 * i),60))
+        }
+
+        for (i in 18..26) {
+            addSlot(Slot(player.inventory, i, (20 * i), 80))
+        }
+
+        for (i in 27..35) {
+            addSlot(Slot(player.inventory, i, (20 * i), 100))
+        }
+
+        for (i in 0..8) {
+            addSlot(Slot(player.inventory, i, (20 * i), 120))
         }
     }
 

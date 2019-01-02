@@ -32,7 +32,7 @@ import net.redstoneparadox.techsuite.util.Machine
 abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type), Tickable, Inventory, IEnergyUser, GuiController{
 
     open val machine : Machine? = null
-    private val inventory : DefaultedList<ItemStack> = DefaultedList.create(invSize, ItemStack.EMPTY)
+    val inventory : DefaultedList<ItemStack> = DefaultedList.create(invSize, ItemStack.EMPTY)
     var ticksRemaining = 200
     var machineRecipe : MachineRecipe = RecipeRegistry.EMPTY_RECIPE
 
