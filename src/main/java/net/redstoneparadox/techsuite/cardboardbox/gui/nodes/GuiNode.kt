@@ -1,4 +1,4 @@
-package net.redstoneparadox.techsuite.cardboardbox.gui.components
+package net.redstoneparadox.techsuite.cardboardbox.gui.nodes
 
 import net.minecraft.client.font.FontRenderer
 import net.minecraft.client.gui.Gui
@@ -8,7 +8,7 @@ import net.minecraft.client.gui.Gui
  */
 
 /**
- * The base component for all other GUI tree components.
+ * The base component for all other GUI tree nodes.
  *
  * @param name the specific name of the component in the tree.
  * @param x The x position on screen.
@@ -16,9 +16,9 @@ import net.minecraft.client.gui.Gui
  *
  * Unless otherwise noted in child classes, all constructor parameters here have the same uses.
  */
-open class GuiTreeComponent(var name : String, var x : Float, var y : Float) {
+open class GuiNode(var name : String, var x : Float, var y : Float) {
 
-    var children : ArrayList<GuiTreeComponent> = ArrayList()
+    var children : ArrayList<GuiNode> = ArrayList()
 
     fun setup(gui : Gui) {
         setupSelf(gui)
@@ -45,9 +45,13 @@ open class GuiTreeComponent(var name : String, var x : Float, var y : Float) {
         drawChildren(gui, float, int1, int2, fontRenderer)
     }
 
-   open fun drawSelf(gui: Gui, float: Float, int1: Int, int2: Int, fontRenderer: FontRenderer) {
+    open fun drawSelf(gui: Gui, float: Float, int1: Int, int2: Int, fontRenderer: FontRenderer) {
 
-   }
+    }
+
+    open fun createGridCopy(xShift: Float, yShift: Float, iteration: Int): GuiNode {
+        return GuiNode(name + "_" + iteration.toString(), x + xShift, y + yShift)
+    }
 
     private fun drawChildren(gui: Gui, float: Float, int1: Int, int2: Int, fontRenderer: FontRenderer) {
 
@@ -60,7 +64,7 @@ open class GuiTreeComponent(var name : String, var x : Float, var y : Float) {
         }
     }
 
-    fun getChild(name : String) : GuiTreeComponent? {
+    fun getChild(name : String) : GuiNode? {
 
         for (child in children) {
             if (child.name == name) {

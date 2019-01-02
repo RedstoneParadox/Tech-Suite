@@ -5,7 +5,7 @@ import net.minecraft.container.Container
 import net.minecraft.util.Identifier
 import net.redstoneparadox.techsuite.TechSuite
 import net.redstoneparadox.techsuite.cardboardbox.gui.CardboardContainerGUI
-import net.redstoneparadox.techsuite.cardboardbox.misc.CardboardContainer
+import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
 
 /**
  * Created by RedstoneParadox on 12/31/2018.

@@ -1,9 +1,9 @@
 package net.redstoneparadox.techsuite.cardboardbox.gui
 
 import net.minecraft.client.gui.ContainerGui
-import net.redstoneparadox.techsuite.cardboardbox.gui.components.GuiTreeComponent
+import net.redstoneparadox.techsuite.cardboardbox.gui.nodes.GuiNode
 import net.redstoneparadox.techsuite.cardboardbox.hooks.IGui
-import net.redstoneparadox.techsuite.cardboardbox.misc.CardboardContainer
+import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
 import net.redstoneparadox.techsuite.cardboardbox.misc.GuiController
 
 /**
@@ -35,7 +35,7 @@ class CardboardContainerGUI(cardboardContainer: CardboardContainer) : ContainerG
 
     }
 
-    fun getChild(name : String) : GuiTreeComponent? {
+    fun getChild(name : String) : GuiNode? {
         return guiTree.getChild(name)
     }
 }

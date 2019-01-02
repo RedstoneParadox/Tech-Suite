@@ -3,7 +3,7 @@ package net.redstoneparadox.techsuite.registry
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry
 import net.minecraft.util.Identifier
 import net.redstoneparadox.techsuite.TechSuite
-import net.redstoneparadox.techsuite.cardboardbox.misc.CardboardContainer
+import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
 
 
 /**

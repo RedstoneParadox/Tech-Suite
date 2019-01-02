@@ -3,14 +3,14 @@ package net.redstoneparadox.techsuite.cardboardbox.gui
 import net.minecraft.client.font.FontRenderer
 import net.minecraft.client.gui.Gui
 import net.minecraft.util.Identifier
-import net.redstoneparadox.techsuite.cardboardbox.gui.components.GuiTreeComponent
+import net.redstoneparadox.techsuite.cardboardbox.gui.nodes.GuiNode
 
 /**
  * Created by RedstoneParadox on 12/30/2018.
  */
 class GuiTree(val identifier: Identifier) {
 
-    var children : ArrayList<GuiTreeComponent> = ArrayList()
+    var children : ArrayList<GuiNode> = ArrayList()
 
     fun setup(gui : Gui) {
 
@@ -34,7 +34,7 @@ class GuiTree(val identifier: Identifier) {
         }
     }
 
-    fun getChild(name : String) : GuiTreeComponent? {
+    fun getChild(name : String) : GuiNode? {
 
         for (child in children) {
             if (child.name == name) {

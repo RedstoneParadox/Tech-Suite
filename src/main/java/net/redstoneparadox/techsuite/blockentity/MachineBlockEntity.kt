@@ -11,14 +11,12 @@ import net.minecraft.item.Items
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.text.TextComponent
 import net.minecraft.util.DefaultedList
-import net.minecraft.util.Identifier
 import net.minecraft.util.InventoryUtil
 import net.minecraft.util.Tickable
-import net.redstoneparadox.techsuite.TechSuite
 import net.redstoneparadox.techsuite.cardboardbox.gui.CardboardContainerGUI
 import net.redstoneparadox.techsuite.cardboardbox.gui.GuiTree
 import net.redstoneparadox.techsuite.cardboardbox.misc.GuiController
-import net.redstoneparadox.techsuite.cardboardbox.registry.CardboardGuiTreeRegistry
+import net.redstoneparadox.techsuite.client.registry.GuiTreeRegistry
 import net.redstoneparadox.techsuite.energy.IEnergyUser
 import net.redstoneparadox.techsuite.recipe.MachineRecipe
 import net.redstoneparadox.techsuite.registry.RecipeRegistry
@@ -110,7 +108,7 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
 
     override fun setup(gui: Gui, player: PlayerEntity): GuiTree {
         this.gui = (gui as CardboardContainerGUI)
-        return CardboardGuiTreeRegistry.getComponentTree(Identifier(TechSuite.MOD_ID, "machine"))!!
+        return GuiTreeRegistry.machineTree
     }
 
     override fun fromTag(tag: CompoundTag) {
