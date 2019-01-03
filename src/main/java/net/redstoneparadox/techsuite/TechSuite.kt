@@ -9,6 +9,7 @@ import net.redstoneparadox.techsuite.registry.*
 class TechSuite : ModInitializer {
 
     override fun onInitialize() {
+        GuiTreeRegistry.initGuiTrees()
         ContainerRegistry.initContainers()
         BlockEntityRegistry.initBlockEntities()
         BlockRegistry.initBlocks()

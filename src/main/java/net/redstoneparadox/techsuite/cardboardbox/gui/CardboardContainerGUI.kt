@@ -1,10 +1,9 @@
 package net.redstoneparadox.techsuite.cardboardbox.gui
 
 import net.minecraft.client.gui.ContainerGui
+import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
 import net.redstoneparadox.techsuite.cardboardbox.gui.nodes.GuiNode
 import net.redstoneparadox.techsuite.cardboardbox.hooks.IGui
-import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
-import net.redstoneparadox.techsuite.cardboardbox.misc.GuiController
 
 /**
  * Created by RedstoneParadox on 12/30/2018.
@@ -14,15 +13,10 @@ class CardboardContainerGUI(cardboardContainer: CardboardContainer) : ContainerG
     var float: Float = 0f
     var int1: Int = 0
     var int2: Int = 0
-    var guiTree : GuiTree
-
-    init {
-        var blockEntityController : GuiController = cardboardContainer.player.world.getBlockEntity(cardboardContainer.pos) as GuiController
-        guiTree = blockEntityController.setup(this, cardboardContainer.player)
-    }
+    private var guiTree : GuiTree = cardboardContainer.guiTree
 
     override fun setup() {
-        guiTree.setup(this)
+        guiTree.setupClient(this)
     }
 
     override fun drawBackground(p0: Float, p1: Int, p2: Int) {

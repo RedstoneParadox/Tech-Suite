@@ -46,14 +46,18 @@ class GuiTreeBuilder(val identifier: Identifier) {
      * @param columnSize the width of each column.
      */
     fun addNodeGrid(node: GuiNode, rows : Int, columns : Int, rowSize : Float, columnSize : Float) : GuiTreeBuilder {
-        node.name = node.name + "_0"
+        var iteration : Int = 0
 
-        var iteration : Int = 1
+        for (j in 0 until rows) {
 
-        for (j in 1..rows) {
+            for (i in 0 until columns) {
 
-            for (i in 1..columns) {
-                if (i != 1 && j != 1) {
+                if (iteration == 0) {
+                    node.name = node.name + "_0"
+                    tree.children.add(node)
+                    iteration = 1
+                }
+                else {
                     tree.children.add(node.createGridCopy((columnSize * i), (rowSize * j), iteration))
                     iteration += 1
                 }

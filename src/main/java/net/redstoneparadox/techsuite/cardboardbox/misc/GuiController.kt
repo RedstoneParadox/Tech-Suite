@@ -1,7 +1,5 @@
 package net.redstoneparadox.techsuite.cardboardbox.misc
 
-import net.minecraft.client.gui.Gui
-import net.minecraft.entity.player.PlayerEntity
 import net.redstoneparadox.techsuite.cardboardbox.gui.GuiTree
 
 /**
@@ -15,13 +13,9 @@ import net.redstoneparadox.techsuite.cardboardbox.gui.GuiTree
 interface GuiController {
 
     /**
-     * The method used by the gui to pass itself to the controller; override this to store the gui in the controller and
-     * attach the GuiTree to the gui.
-     *
-     *@param gui the GUI that gets passed in.
-     * @param player the player that opened the GUI.
+     * The tree
      */
-    fun setup(gui: Gui, player: PlayerEntity): GuiTree
+    var guiTree : GuiTree
 
 }
 

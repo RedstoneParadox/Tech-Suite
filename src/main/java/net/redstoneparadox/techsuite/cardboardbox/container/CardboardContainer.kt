@@ -1,11 +1,12 @@
 package net.redstoneparadox.techsuite.cardboardbox.container
 
-import net.minecraft.client.gui.Gui
 import net.minecraft.container.Container
 import net.minecraft.container.Slot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.util.math.BlockPos
+import net.redstoneparadox.techsuite.cardboardbox.gui.GuiTree
+import net.redstoneparadox.techsuite.cardboardbox.misc.GuiController
 
 /**
  * Created by RedstoneParadox on 12/30/2018.
@@ -16,14 +17,23 @@ class CardboardContainer(var pos: BlockPos, val player : PlayerEntity) : Contain
     var hotbarSlotList : ArrayList<Slot> = ArrayList()
     var containerSlotList : ArrayList<Slot> = ArrayList()
 
+    var guiTree : GuiTree
+
     init {
         println("Opened container, $pos")
 
+        var blockEntityController : GuiController = player.world.getBlockEntity(pos) as GuiController
+        guiTree = blockEntityController.guiTree
         inventoryToSlots()
+        guiTree.setup(this)
     }
 
     fun inventoryToSlots() {
         var inventory : Inventory = player.world.getBlockEntity(pos) as Inventory
+
+        for (i in 0..8) {
+            addHotbarSlot(Slot(player.inventory, i, (20 * (i + 1)), 120))
+        }
 
         for (i in 9..17) {
             addPlayerSlot(Slot(player.inventory, i, (20 * (i - 8)),60))
@@ -35,10 +45,6 @@ class CardboardContainer(var pos: BlockPos, val player : PlayerEntity) : Contain
 
         for (i in 27..35) {
             addPlayerSlot(Slot(player.inventory, i, (20 * (i - 26)), 100))
-        }
-
-        for (i in 0..8) {
-            addHotbarSlot(Slot(player.inventory, i, (20 * (i + 1)), 120))
         }
 
         for (i in 0..(inventory.invSize - 1)) {
@@ -60,8 +66,6 @@ class CardboardContainer(var pos: BlockPos, val player : PlayerEntity) : Contain
         containerSlotList.add(slot)
         addSlot(slot)
     }
-
-    lateinit var gui : Gui
 
     override fun canUse(player: PlayerEntity): Boolean {
         return true

@@ -3,6 +3,7 @@ package net.redstoneparadox.techsuite.cardboardbox.gui
 import net.minecraft.client.font.FontRenderer
 import net.minecraft.client.gui.Gui
 import net.minecraft.util.Identifier
+import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
 import net.redstoneparadox.techsuite.cardboardbox.gui.nodes.GuiNode
 
 /**
@@ -12,14 +13,25 @@ class GuiTree(val identifier: Identifier) {
 
     var children : ArrayList<GuiNode> = ArrayList()
 
-    fun setup(gui : Gui) {
+    fun setup(cardboardContainer: CardboardContainer) {
 
         if (children.isEmpty()) {
             return
         }
 
         for (child in children) {
-            child.setup(gui)
+            child.setup(cardboardContainer)
+        }
+    }
+
+    fun setupClient(gui: Gui) {
+
+        if (children.isEmpty()) {
+            return
+        }
+
+        for (child in children) {
+            child.setupClient(gui)
         }
     }
 

@@ -2,6 +2,7 @@ package net.redstoneparadox.techsuite.cardboardbox.gui.nodes
 
 import net.minecraft.client.font.FontRenderer
 import net.minecraft.client.gui.Gui
+import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
 
 /**
  * Created by RedstoneParadox on 12/30/2018.
@@ -20,23 +21,43 @@ open class GuiNode(var name : String, var x : Float, var y : Float) {
 
     var children : ArrayList<GuiNode> = ArrayList()
 
-    fun setup(gui : Gui) {
-        setupSelf(gui)
-        setupChildren(gui)
+    fun setupClient(gui : Gui) {
+        setupSelfClient(gui)
+        setupChildrenClient(gui)
     }
 
-    open fun setupSelf(gui: Gui) {
+    open fun setupSelfClient(gui: Gui) {
 
     }
 
-    private fun setupChildren(gui : Gui) {
+    private fun setupChildrenClient(gui : Gui) {
 
         if (children.isEmpty()) {
             return
         }
 
         for (child in children) {
-            child.setup(gui)
+            child.setupClient(gui)
+        }
+    }
+
+    fun setup(cardboardContainer: CardboardContainer) {
+        setupSelf(cardboardContainer)
+        setupChildren(cardboardContainer)
+    }
+
+    open fun setupSelf(cardboardContainer: CardboardContainer) {
+
+    }
+
+    fun setupChildren(cardboardContainer: CardboardContainer) {
+
+        if (children.isEmpty()) {
+            return
+        }
+
+        for (child in children) {
+            child.setup(cardboardContainer)
         }
     }
 

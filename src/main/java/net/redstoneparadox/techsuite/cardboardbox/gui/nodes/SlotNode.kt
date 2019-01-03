@@ -1,9 +1,8 @@
 package net.redstoneparadox.techsuite.cardboardbox.gui.nodes
 
-import net.minecraft.client.gui.Gui
 import net.minecraft.container.Slot
+import net.redstoneparadox.techsuite.cardboardbox.container.CardboardContainer
 import net.redstoneparadox.techsuite.cardboardbox.container.InventoryType
-import net.redstoneparadox.techsuite.cardboardbox.gui.CardboardContainerGUI
 import kotlin.math.roundToInt
 
 /**
@@ -17,11 +16,11 @@ import kotlin.math.roundToInt
  */
 class SlotNode(name: String, x: Float, y: Float, val type: InventoryType, val index: Int) : GuiNode(name, x, y) {
 
-    override fun setupSelf(gui: Gui) {
+    override fun setupSelf(cardboardContainer: CardboardContainer) {
         val slot : Slot = when (type) {
-            InventoryType.CONTAINER -> (gui as CardboardContainerGUI).container.getSlot(index + 36)
-            InventoryType.PLAYER -> (gui as CardboardContainerGUI).container.getSlot(index + 9)
-            InventoryType.HOTBAR -> (gui as CardboardContainerGUI).container.getSlot(index)
+            InventoryType.CONTAINER -> cardboardContainer.getSlot(index + 36)
+            InventoryType.PLAYER -> cardboardContainer.getSlot(index + 9)
+            InventoryType.HOTBAR -> cardboardContainer.getSlot(index)
         }
 
         slot.xPosition = x.roundToInt()

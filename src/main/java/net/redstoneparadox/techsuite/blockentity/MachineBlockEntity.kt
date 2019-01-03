@@ -3,7 +3,6 @@ package net.redstoneparadox.techsuite.blockentity
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.client.gui.Gui
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
@@ -13,12 +12,11 @@ import net.minecraft.text.TextComponent
 import net.minecraft.util.DefaultedList
 import net.minecraft.util.InventoryUtil
 import net.minecraft.util.Tickable
-import net.redstoneparadox.techsuite.cardboardbox.gui.CardboardContainerGUI
 import net.redstoneparadox.techsuite.cardboardbox.gui.GuiTree
 import net.redstoneparadox.techsuite.cardboardbox.misc.GuiController
-import net.redstoneparadox.techsuite.client.registry.GuiTreeRegistry
 import net.redstoneparadox.techsuite.energy.IEnergyUser
 import net.redstoneparadox.techsuite.recipe.MachineRecipe
+import net.redstoneparadox.techsuite.registry.GuiTreeRegistry
 import net.redstoneparadox.techsuite.registry.RecipeRegistry
 import net.redstoneparadox.techsuite.util.Machine
 
@@ -36,7 +34,7 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
 
     var test : Boolean = true
 
-    var gui : CardboardContainerGUI? = null
+    override var guiTree: GuiTree = GuiTreeRegistry.machineTree
 
     override fun tick() {
 
@@ -104,11 +102,6 @@ abstract class MachineBlockEntity(type: BlockEntityType<*>) : BlockEntity(type),
         }
 
         return false
-    }
-
-    override fun setup(gui: Gui, player: PlayerEntity): GuiTree {
-        this.gui = (gui as CardboardContainerGUI)
-        return GuiTreeRegistry.machineTree
     }
 
     override fun fromTag(tag: CompoundTag) {
